@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CheckForHotSpring</string>
+    <string name="start">CHECK START</string>
 </resources>
