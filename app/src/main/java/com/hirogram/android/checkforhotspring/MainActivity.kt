@@ -30,5 +30,6 @@ class MainActivity : AppCompatActivity() {
 
         //adapterの設定
         mAdapter = CustomAdapter(bList)
+        recyclerView.adapter = mAdapter
     }
 }
