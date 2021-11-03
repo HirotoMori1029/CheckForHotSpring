@@ -7,8 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mAdapter: CustomAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -29,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = layoutManager
 
         //adapterの設定
-        mAdapter = CustomAdapter(bList)
-        recyclerView.adapter = mAdapter
+        recyclerView.adapter = CustomAdapter(bList)
     }
 }
