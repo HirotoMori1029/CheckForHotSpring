@@ -7,10 +7,11 @@
     tools:context=".MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/lv"
-        android:layout_width="match_parent"
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="8dp"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toTopOf="@+id/btn"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
