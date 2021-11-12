@@ -25,10 +25,8 @@ class CustomAdapter(private val blgList: ArrayList<Belonging>): RecyclerView.Ada
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val belonging = blgList[position]
-
-
         holder.tvID.apply {
-            text = this.context.getString(R.string.item_id) + belonging.id.toString()
+            text = this.context.getString(R.string.item_number, belonging.id)
         }
         holder.tvName.text = belonging.name
         holder.checkBox.isChecked = belonging.check

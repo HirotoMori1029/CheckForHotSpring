@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">CheckForHotSpring</string>
     <string name="start">CHECK START</string>
-    <string name="item_id">ItemNo.</string>
+    <string name="item_number">ItemNo. %d</string>
 </resources>
