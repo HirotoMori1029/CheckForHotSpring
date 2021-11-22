@@ -2,6 +2,7 @@
     <string name="app_name">CheckForHotSpring</string>
     <string name="start">CHECK START</string>
     <string name="item_number">ItemNo. %d</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_desc">Input Item</string>
+    <string name="item_name">Item Name</string>
+    <string name="save">SAVE</string>
 </resources>
