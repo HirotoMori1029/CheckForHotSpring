@@ -1,11 +1,11 @@
 package com.hirogram.android.checkforhotspring
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.paperdb.Paper
@@ -45,16 +45,13 @@ class MainActivity : AppCompatActivity() {
 
         val addButton = findViewById<ImageButton>(R.id.btn_plus)
         addButton.setOnClickListener {
-            goFragment(AddItemFragment())
+            val intent = Intent(this, AddItemActivity::class.java)
+            startActivity(intent)
+
         }
     }
 
-    private fun goFragment(fragment: Fragment) {
-        val frgManager = supportFragmentManager
-        val frgTransaction = frgManager.beginTransaction()
-        frgTransaction.replace(R.id.main_layout, fragment)
-        frgTransaction.commit()
-    }
+
 
 
 }
