@@ -8,7 +8,7 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CustomAdapter(private val blgList: ArrayList<Belonging>): RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
+class CustomAdapter(private val blgList: MutableList<Belonging>): RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) :RecyclerView.ViewHolder(view) {
         val tvID: TextView = view.findViewById(R.id.tvID)
@@ -26,7 +26,7 @@ class CustomAdapter(private val blgList: ArrayList<Belonging>): RecyclerView.Ada
 
         val belonging = blgList[position]
         holder.tvID.apply {
-            text = this.context.getString(R.string.item_number, belonging.id)
+            text = this.context.getString(R.string.item_number, position)
         }
         holder.tvName.text = belonging.name
         holder.checkBox.isChecked = belonging.check

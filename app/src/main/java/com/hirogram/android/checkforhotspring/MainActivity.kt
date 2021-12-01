@@ -16,38 +16,32 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //初期化
         Paper.init(this)
-
-
-        //データ作成
-        val towel = Belonging(1, "towel", false)
-        val money = Belonging(2, "money", false)
-        val spareChanges = Belonging(3, "spare changes", false)
-        val bList = arrayListOf(towel, money, spareChanges)
-
+        val bList = mutableListOf<Belonging>()
+        Paper.book().allKeys.forEach {
+            bList.add(Paper.book().read(it))
+        }
 
         //RecyclerViewの取得
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
             setHasFixedSize(true)
         }
-
-        //layoutManager
         val layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = layoutManager
-
-        //adapterの設定
         recyclerView.adapter = CustomAdapter(bList)
 
+        //StartButtonを押下されたときの処理(暫定)
         val btn = findViewById<Button>(R.id.btn)
         btn.setOnClickListener {
             Toast.makeText(this, "$bList", Toast.LENGTH_LONG).show()
         }
 
+        //＋ボタンを押下されたときの処理
         val addButton = findViewById<ImageButton>(R.id.btn_plus)
         addButton.setOnClickListener {
             val intent = Intent(this, AddItemActivity::class.java)
             startActivity(intent)
-
         }
     }
 
