@@ -14,14 +14,17 @@ class AddItemActivity : AppCompatActivity() {
 
         val etText = findViewById<EditText>(R.id.et_text)
         val btnSave = findViewById<Button>(R.id.btn_save_text)
-        Paper.init(this)
 
         btnSave.setOnClickListener {
-            val blg = Belonging(etText.text.toString(), false)
-            Paper.book().write(blg.name, blg)
-            Toast.makeText(this, blg.name + "has been saved", Toast.LENGTH_LONG).show()
-            finish()
+            if (etText.text.toString() == "") {
+                Toast.makeText(this, "input text", Toast.LENGTH_LONG).show()
+            } else {
+                val app = application as MainApplication
+                val etStr = etText.text.toString()
+                app.saveItem(etStr)
+                Toast.makeText(this, app.readItem(etStr).name + "has been saved", Toast.LENGTH_LONG).show()
+                finish()
+            }
         }
-
     }
 }

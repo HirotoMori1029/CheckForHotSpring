@@ -3,6 +3,7 @@ package com.hirogram.android.checkforhotspring
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
@@ -16,8 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //初期化
-        Paper.init(this)
         val bList = mutableListOf<Belonging>()
         Paper.book().allKeys.forEach {
             bList.add(Paper.book().read(it))
@@ -45,7 +44,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        //todo ここで更新する処理を記述したい
 
-
+    }
 
 }
