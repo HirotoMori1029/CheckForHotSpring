@@ -16,13 +16,13 @@ class AddItemActivity : AppCompatActivity() {
         val btnSave = findViewById<Button>(R.id.btn_save_text)
 
         btnSave.setOnClickListener {
-            if (etText.text.toString() == "") {
+            val etStr = etText.text.toString()
+            if (etStr == "") {
                 Toast.makeText(this, "input text", Toast.LENGTH_LONG).show()
             } else {
-                val app = application as MainApplication
-                val etStr = etText.text.toString()
-                app.saveItem(etStr)
-                Toast.makeText(this, app.readItem(etStr).name + "has been saved", Toast.LENGTH_LONG).show()
+                val blg = Belonging(etStr, false)
+                Paper.book().write(etStr, blg)
+                Toast.makeText(this, Paper.book().read<Belonging>(etStr).name + "has been saved", Toast.LENGTH_LONG).show()
                 finish()
             }
         }

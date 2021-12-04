@@ -35,4 +35,5 @@ class CustomAdapter(private val blgList: MutableList<Belonging>): RecyclerView.A
     }
 
     override fun getItemCount() = blgList.size
+
 }

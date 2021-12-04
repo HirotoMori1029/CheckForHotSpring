@@ -11,14 +11,4 @@ class MainApplication: Application() {
         Paper.init(this)
     }
 
-    //PaperSave
-    fun saveItem(name: String) {
-        val blg = Belonging(name, false)
-        Paper.book().write(blg.name, blg)
-    }
-
-    //PaperRead
-    fun readItem(key: String): Belonging {
-        return Paper.book().read(key)
-    }
 }
