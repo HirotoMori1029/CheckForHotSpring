@@ -3,6 +3,7 @@ package com.hirogram.android.checkforhotspring
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
@@ -25,14 +26,14 @@ class MainActivity : AppCompatActivity() {
         }
         val layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = layoutManager
-        bList = itemUpdate()
+        bList = generateItemList()
         cAdapter = CustomAdapter(bList)
         recyclerView.adapter = cAdapter
 
         //StartButtonを押下されたときの処理(暫定)
         val btn = findViewById<Button>(R.id.btn)
         btn.setOnClickListener {
-            Toast.makeText(this, "$", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "${Paper.book().allKeys}", Toast.LENGTH_LONG).show()
         }
 
         //＋ボタンを押下されたときの処理
@@ -46,12 +47,13 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        cAdapter = CustomAdapter(itemUpdate())
+        cAdapter?.bList = generateItemList()
         cAdapter?.notifyDataSetChanged()
+        Log.d("onResume", "onResume has been executed")
 
     }
 
-    private fun itemUpdate () :MutableList<Belonging> {
+    private fun generateItemList() :MutableList<Belonging> {
         val itemList = mutableListOf<Belonging>()
         Paper.book().allKeys.forEach {
             itemList.add(Paper.book().read(it))
