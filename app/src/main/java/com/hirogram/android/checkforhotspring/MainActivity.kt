@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
@@ -42,6 +43,14 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, AddItemActivity::class.java)
             startActivity(intent)
         }
+
+        val btnDelete = findViewById<Button>(R.id.btn_delete)
+        btnDelete.setOnClickListener {
+            //todo あとでチェックしていないアイテムを削除するように変更する
+            Paper.book().destroy()
+            cAdapter?.bList?.clear()
+            cAdapter?.notifyDataSetChanged()
+        }
     }
 
     override fun onResume() {
@@ -59,6 +68,11 @@ class MainActivity : AppCompatActivity() {
             itemList.add(Paper.book().read(it))
         }
         return itemList
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_options_menu_list, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
 }
