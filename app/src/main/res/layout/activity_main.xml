@@ -48,6 +48,6 @@
         android:elevation="3dp"
         app:layout_constraintBottom_toBottomOf="@id/btn"
         app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="Add list" />
+        android:contentDescription="@string/add_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

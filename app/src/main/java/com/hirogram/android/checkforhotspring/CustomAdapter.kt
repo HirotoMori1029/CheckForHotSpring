@@ -26,7 +26,7 @@ class CustomAdapter(var bList: MutableList<Belonging>): RecyclerView.Adapter<Cus
 
         val belonging = bList[position]
         holder.tvID.apply {
-            text = this.context.getString(R.string.item_number, position)
+            text = this.context.getString(R.string.item_number, position + 1)
         }
         holder.tvName.text = belonging.name
         holder.checkBox.isChecked = belonging.check
