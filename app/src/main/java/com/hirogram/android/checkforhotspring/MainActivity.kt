@@ -15,7 +15,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.behavior.SwipeDismissBehavior
 import io.paperdb.Paper
 
 class MainActivity : AppCompatActivity() {
@@ -40,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         cAdapter = CustomAdapter(bList)
 
         //touchでの処理するための記述
-        swipeToDismissTouchHelper
+        swipeToDismissTouchHelper.attachToRecyclerView(recyclerView)
         recyclerView.adapter = cAdapter
 
         //StartButtonを押下されたときの処理(暫定)
@@ -60,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         btnDelete.setOnClickListener {
             //todo あとでチェックしていないアイテムを削除するように変更する
             Paper.book().destroy()
-            cAdapter.bList?.clear()
+            cAdapter.bList.clear()
             cAdapter.notifyDataSetChanged()
         }
     }
@@ -103,9 +102,10 @@ class MainActivity : AppCompatActivity() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 //positionを取得する
                 val position = viewHolder.absoluteAdapterPosition
-                adapter.bList.removeAt(position)
-                //todo Paperの処理で削除する必要がある
                 val key = adapter.bList[position].name
+                adapter.bList.removeAt(position)
+                adapter.notifyDataSetChanged()
+                //Paperの処理
                 Paper.book().delete(key)
             }
 
@@ -133,9 +133,28 @@ class MainActivity : AppCompatActivity() {
                 val background = ColorDrawable(Color.RED)
                 val deleteIcon = AppCompatResources.getDrawable(
                     this@MainActivity,
-                    //todo iconを作成する
+                    //todo iconは後で作成する
                     R.drawable.ic_launcher_foreground
                 )
+
+                val iconMarginVertical =
+                    (viewHolder.itemView.height - deleteIcon!!.intrinsicHeight) / 2
+
+                deleteIcon.setBounds(
+                    itemView.left + iconMarginVertical,
+                    itemView.top + iconMarginVertical,
+                    itemView.left + iconMarginVertical + deleteIcon.intrinsicWidth,
+                    itemView.bottom - iconMarginVertical
+                )
+                background.setBounds(
+                    itemView.left,
+                    itemView.top,
+                    itemView.right + dX.toInt(),
+                    itemView.bottom
+                )
+
+                background.draw(c)
+                deleteIcon.draw(c)
             }
         }
         )
