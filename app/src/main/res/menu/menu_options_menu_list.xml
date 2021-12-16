@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menuTest1"
+        android:id="@+id/allDelete"
         app:showAsAction="never"
-        android:title="menuTest1"/>
+        android:title="@string/all_delete"/>
 
     <item
-        android:id="@+id/menuTest2"
+        android:id="@+id/addAddress"
         app:showAsAction="never"
-        android:title="menuTest2"/>
+        android:title="@string/add_address"/>
 
 </menu>

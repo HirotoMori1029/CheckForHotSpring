@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
@@ -55,12 +56,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val btnDelete = findViewById<Button>(R.id.btn_delete)
-        btnDelete.setOnClickListener {
-            Paper.book().destroy()
-            cAdapter.bList.clear()
-            cAdapter.notifyDataSetChanged()
-        }
     }
 
     override fun onResume() {
@@ -77,6 +72,28 @@ class MainActivity : AppCompatActivity() {
             itemList.add(Paper.book().read(it))
         }
         return itemList
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        var returnVal = true
+
+        when(item.itemId) {
+            //全てのアイテムを削除する処理
+            R.id.allDelete -> {
+                Paper.book().destroy()
+                cAdapter.bList.clear()
+                cAdapter.notifyDataSetChanged()
+            }
+            //アドレスを登録する処理
+            R.id.addAddress -> {
+                //todo　プルダウンメニューで天気を確認する場所を登録するアクティビティを作る
+//                val addIntent = Intent(this@MainActivity, AddItemActivity::class.java)
+//                startActivity(addIntent)
+            }
+            else ->
+                returnVal = super.onOptionsItemSelected(item)
+        }
+        return returnVal
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
