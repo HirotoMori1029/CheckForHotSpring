@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
                 val position = viewHolder.absoluteAdapterPosition
                 val key = adapter.bList[position].name
                 adapter.bList.removeAt(position)
-                adapter.notifyDataSetChanged()
+                adapter.notifyItemRemoved(position)
                 //Paperの処理
                 Paper.book().delete(key)
             }
@@ -133,8 +133,7 @@ class MainActivity : AppCompatActivity() {
                 val background = ColorDrawable(Color.RED)
                 val deleteIcon = AppCompatResources.getDrawable(
                     this@MainActivity,
-                    //todo iconは後で作成する
-                    R.drawable.ic_launcher_foreground
+                    R.drawable.ic_baseline_delete_32
                 )
 
                 val iconMarginVertical =
