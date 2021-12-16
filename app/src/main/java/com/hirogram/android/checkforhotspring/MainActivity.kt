@@ -57,7 +57,6 @@ class MainActivity : AppCompatActivity() {
 
         val btnDelete = findViewById<Button>(R.id.btn_delete)
         btnDelete.setOnClickListener {
-            //todo あとでチェックしていないアイテムを削除するように変更する
             Paper.book().destroy()
             cAdapter.bList.clear()
             cAdapter.notifyDataSetChanged()
@@ -69,7 +68,6 @@ class MainActivity : AppCompatActivity() {
 
         cAdapter.bList = generateItemList()
         cAdapter.notifyDataSetChanged()
-        Log.d("onResume", "onResume has been executed")
 
     }
 
