@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -44,8 +43,9 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = cAdapter
 
         //StartButtonを押下されたときの処理(暫定)
-        val btn = findViewById<Button>(R.id.btn)
-        btn.setOnClickListener {
+        val btnStart = findViewById<Button>(R.id.btn_start)
+        btnStart.setOnClickListener {
+
             Toast.makeText(this, "${Paper.book().allKeys}", Toast.LENGTH_LONG).show()
         }
 

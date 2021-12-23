@@ -3,7 +3,7 @@
     <string name="start">CHECK START</string>
     <string name="item_number">ItemNo. %d</string>
     <string name="add_desc">Input Item</string>
-    <string name="item_name">Item Name</string>
+    <string name="item_name"> </string>
     <string name="save">SAVE</string>
     <string name="add_item">Add Item</string>
 

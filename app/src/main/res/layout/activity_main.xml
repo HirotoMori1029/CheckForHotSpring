@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn"
+        android:id="@+id/btn_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/start"
@@ -37,7 +37,7 @@
         style="@style/Widget.AppCompat.ImageButton"
         android:background="@drawable/btn_round"
         android:elevation="3dp"
-        app:layout_constraintBottom_toBottomOf="@id/btn"
+        app:layout_constraintBottom_toBottomOf="@id/btn_start"
         app:layout_constraintEnd_toEndOf="parent"
         android:contentDescription="@string/add_item" />
 
