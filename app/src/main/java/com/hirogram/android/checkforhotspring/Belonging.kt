@@ -1,3 +1,3 @@
 package com.hirogram.android.checkforhotspring
 
-data class Belonging(val name: String, val check: Boolean)
+data class Belonging(val name: String, var check: Boolean)

@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 class CustomAdapter(var bList: MutableList<Belonging>): RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
+    var listener: Listener? = null
+
     class ViewHolder(view: View) :RecyclerView.ViewHolder(view) {
         val tvID: TextView = view.findViewById(R.id.tvID)
         val tvName: TextView = view.findViewById(R.id.tvName)
@@ -30,10 +32,17 @@ class CustomAdapter(var bList: MutableList<Belonging>): RecyclerView.Adapter<Cus
         }
         holder.tvName.text = belonging.name
         holder.checkBox.isChecked = belonging.check
+        holder.checkBox.setOnClickListener {
+            listener?.onCheckClick(position)
+        }
 
         Log.d("CustomAdapter", "onBindViewHolder has been called")
     }
 
     override fun getItemCount() = bList.size
+
+    interface Listener {
+        fun onCheckClick(position: Int)
+    }
 
 }

@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -24,6 +25,9 @@ class MainActivity : AppCompatActivity() {
     private val swipeToDismissTouchHelper by lazy {
         getSwipeToDismissTouchHelper(cAdapter)
     }
+    //アイテム状態を保持する定数
+    private var itemName: String? = null
+    private var itemState = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +41,17 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = layoutManager
         bList = generateItemList()
         cAdapter = CustomAdapter(bList)
+
+        //アダプターに持たせたリスナを定義
+        cAdapter.listener = object : CustomAdapter.Listener{
+            override fun onCheckClick(position: Int) {
+                itemName = Paper.book().allKeys[position]
+                itemState = !(Paper.book().read<Belonging>(itemName).check)
+                Paper.book().write(itemName, itemState)
+                cAdapter.bList[position].check = itemState
+                Log.d("onCheckClick", "$itemName is changed (${!itemState} -> $itemState)")
+            }
+        }
 
         //touchでの処理するための記述
         swipeToDismissTouchHelper.attachToRecyclerView(recyclerView)
