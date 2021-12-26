@@ -45,10 +45,15 @@ class MainActivity : AppCompatActivity() {
         //アダプターに持たせたリスナを定義
         cAdapter.listener = object : CustomAdapter.Listener{
             override fun onCheckClick(position: Int) {
+                //クリックされた名前を代入する
                 itemName = Paper.book().allKeys[position]
+                //クリックされる前の状態とは反対の値をitemStateに代入する
                 itemState = !(Paper.book().read<Belonging>(itemName).check)
-                Paper.book().write(itemName, itemState)
+                //アダプターのリストを更新しpaperに保存する
                 cAdapter.bList[position].check = itemState
+                cAdapter.notifyDataSetChanged()
+                Paper.book().write(itemName, itemState)
+                //結果をログに出力
                 Log.d("onCheckClick", "$itemName is changed (${!itemState} -> $itemState)")
             }
         }
