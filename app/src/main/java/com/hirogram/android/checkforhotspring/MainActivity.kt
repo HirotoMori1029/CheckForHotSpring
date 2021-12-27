@@ -21,13 +21,10 @@ import io.paperdb.Paper
 class MainActivity : AppCompatActivity() {
 
     private lateinit var cAdapter: CustomAdapter
-    private var bList = mutableListOf<Belonging>()
+    private var blgList = mutableListOf<Belonging>()
     private val swipeToDismissTouchHelper by lazy {
         getSwipeToDismissTouchHelper(cAdapter)
     }
-    //アイテム状態を保持する定数
-    private var itemName: String? = null
-    private var itemState = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,22 +36,19 @@ class MainActivity : AppCompatActivity() {
         }
         val layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = layoutManager
-        bList = generateItemList()
-        cAdapter = CustomAdapter(bList)
+        blgList = generateItemList()
+        cAdapter = CustomAdapter(blgList)
 
         //アダプターに持たせたリスナを定義
         cAdapter.listener = object : CustomAdapter.Listener{
             override fun onCheckClick(position: Int) {
                 //クリックされた名前を代入する
-                itemName = Paper.book().allKeys[position]
-                //クリックされる前の状態とは反対の値をitemStateに代入する
-                itemState = !(Paper.book().read<Belonging>(itemName).check)
-                //アダプターのリストを更新しpaperに保存する
-                cAdapter.bList[position].check = itemState
+                blgList[position].check = !(blgList[position].check)
+                cAdapter.bList = blgList
                 cAdapter.notifyDataSetChanged()
-                Paper.book().write(itemName, itemState)
+                Paper.book().write(blgList[position].name, blgList[position].check)
                 //結果をログに出力
-                Log.d("onCheckClick", "$itemName is changed (${!itemState} -> $itemState)")
+                Log.d("onCheckClick", "${blgList[position].name} is changed to {${blgList[position].check}}")
             }
         }
 
@@ -80,8 +74,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
-        cAdapter.bList = generateItemList()
+        blgList = generateItemList()
+        cAdapter.bList = blgList
         cAdapter.notifyDataSetChanged()
 
     }
@@ -100,8 +94,9 @@ class MainActivity : AppCompatActivity() {
         when(item.itemId) {
             //全てのアイテムを削除する処理
             R.id.allDelete -> {
+                blgList.clear()
+                cAdapter.bList = blgList
                 Paper.book().destroy()
-                cAdapter.bList.clear()
                 cAdapter.notifyDataSetChanged()
             }
             //アドレスを登録する処理
