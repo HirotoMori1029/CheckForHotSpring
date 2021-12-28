@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var cAdapter: CustomAdapter
     private var blgList = mutableListOf<Belonging>()
+    private var falseList = mutableListOf<Belonging>()
     private val swipeToDismissTouchHelper by lazy {
         getSwipeToDismissTouchHelper(cAdapter)
     }
@@ -42,10 +43,11 @@ class MainActivity : AppCompatActivity() {
         //アダプターに持たせたリスナを定義
         cAdapter.listener = object : CustomAdapter.Listener{
             override fun onCheckClick(position: Int) {
-                //クリックされた名前を代入する
                 blgList[position].check = !(blgList[position].check)
+                //adapterの更新
                 cAdapter.bList = blgList
                 cAdapter.notifyDataSetChanged()
+                //Paperの更新
                 Paper.book().write(blgList[position].name, blgList[position].check)
                 //結果をログに出力
                 Log.d("onCheckClick", "${blgList[position].name} is changed to {${blgList[position].check}}")
@@ -59,8 +61,18 @@ class MainActivity : AppCompatActivity() {
         //StartButtonを押下されたときの処理(暫定)
         val btnStart = findViewById<Button>(R.id.btn_start)
         btnStart.setOnClickListener {
+            falseList.clear()
+            blgList.forEach {
+                if (!it.check) {
+                    falseList.add(it)
+                }
+            }
+            if (falseList.isEmpty()) {
+                Toast.makeText(this, "All complete!!", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "$falseList", Toast.LENGTH_LONG).show()
+            }
 
-            Toast.makeText(this, "${Paper.book().allKeys}", Toast.LENGTH_LONG).show()
         }
 
         //＋ボタンを押下されたときの処理
