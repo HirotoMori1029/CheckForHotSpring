@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cAdapter: CustomAdapter
     private var blgList = mutableListOf<Belonging>()
     private var falseList = mutableListOf<Belonging>()
+    private var fNameList = arrayListOf<String>()
     private val swipeToDismissTouchHelper by lazy {
         getSwipeToDismissTouchHelper(cAdapter)
     }
@@ -48,7 +49,8 @@ class MainActivity : AppCompatActivity() {
                 cAdapter.bList = blgList
                 cAdapter.notifyDataSetChanged()
                 //Paperの更新
-                Paper.book().write(blgList[position].name, blgList[position].check)
+                Paper.book().
+                write(blgList[position].name, Belonging(blgList[position].name, blgList[position].check))
                 //結果をログに出力
                 Log.d("onCheckClick", "${blgList[position].name} is changed to {${blgList[position].check}}")
             }
@@ -70,9 +72,14 @@ class MainActivity : AppCompatActivity() {
             if (falseList.isEmpty()) {
                 Toast.makeText(this, "All complete!!", Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(this, "$falseList", Toast.LENGTH_LONG).show()
+                fNameList.clear()
+                falseList.forEach {
+                    fNameList.add(it.name)
+                }
+                val dialogFragment = RemainItemDialogFragment()
+                dialogFragment.show(supportFragmentManager, "RemainItemDialogFragment")
+                Toast.makeText(this, "$fNameList", Toast.LENGTH_LONG).show()
             }
-
         }
 
         //＋ボタンを押下されたときの処理
