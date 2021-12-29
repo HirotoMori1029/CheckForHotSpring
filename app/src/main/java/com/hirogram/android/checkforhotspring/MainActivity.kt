@@ -22,8 +22,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var cAdapter: CustomAdapter
     private var blgList = mutableListOf<Belonging>()
-    private var falseList = mutableListOf<Belonging>()
-    private var fNameList = arrayListOf<String>()
+    private var ngList: ArrayList<String>? = null
+    private val listGenerator = ListGenerator()
     private val swipeToDismissTouchHelper by lazy {
         getSwipeToDismissTouchHelper(cAdapter)
     }
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         }
         val layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = layoutManager
-        blgList = generateItemList()
+        blgList = listGenerator.generateItemList()
         cAdapter = CustomAdapter(blgList)
 
         //アダプターに持たせたリスナを定義
@@ -63,22 +63,14 @@ class MainActivity : AppCompatActivity() {
         //StartButtonを押下されたときの処理(暫定)
         val btnStart = findViewById<Button>(R.id.btn_start)
         btnStart.setOnClickListener {
-            falseList.clear()
-            blgList.forEach {
-                if (!it.check) {
-                    falseList.add(it)
-                }
-            }
-            if (falseList.isEmpty()) {
+            ngList = listGenerator.generateNgList(blgList)
+            if (ngList?.isEmpty() == true) {
                 Toast.makeText(this, "All complete!!", Toast.LENGTH_LONG).show()
-            } else {
-                fNameList.clear()
-                falseList.forEach {
-                    fNameList.add(it.name)
-                }
+            } else if (ngList?.isNotEmpty() == true) {
                 val dialogFragment = RemainItemDialogFragment()
                 dialogFragment.show(supportFragmentManager, "RemainItemDialogFragment")
-                Toast.makeText(this, "$fNameList", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "ngList must not be null", Toast.LENGTH_LONG).show()
             }
         }
 
@@ -93,20 +85,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        blgList = generateItemList()
+        blgList = listGenerator.generateItemList()
         cAdapter.bList = blgList
         cAdapter.notifyDataSetChanged()
 
     }
-
-    private fun generateItemList() :MutableList<Belonging> {
-        val itemList = mutableListOf<Belonging>()
-        Paper.book().allKeys.forEach {
-            itemList.add(Paper.book().read(it))
-        }
-        return itemList
-    }
-
+    
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         var returnVal = true
 
