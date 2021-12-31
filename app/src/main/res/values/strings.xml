@@ -13,5 +13,6 @@
 
 <!--  AlertDialog -->
     <string name="dialog_title">Remain Items</string>
-    <string name="dialog_btn_ok">Yes</string>
+    <string name="dialog_btn_ok">Close dialog</string>
+    <string name="dialog_pos_clicked">Prepare the item</string>
 </resources>

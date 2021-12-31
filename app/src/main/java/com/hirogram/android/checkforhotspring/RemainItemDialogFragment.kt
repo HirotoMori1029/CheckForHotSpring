@@ -27,16 +27,7 @@ class RemainItemDialogFragment: DialogFragment() {
 
     private inner class DialogButtonClickListener : DialogInterface.OnClickListener {
         override fun onClick(p0: DialogInterface?, which: Int) {
-            var msg = ""
-            when(which) {
-                DialogInterface.BUTTON_POSITIVE -> {
-                    msg = "Positive"
-                }
-                DialogInterface.BUTTON_NEGATIVE -> {
-                    msg = "Negative"
-                }
-            }
-            Toast.makeText(activity, msg, Toast.LENGTH_LONG).show()
+            Toast.makeText(activity,R.string.dialog_pos_clicked, Toast.LENGTH_LONG).show()
         }
     }
 }
