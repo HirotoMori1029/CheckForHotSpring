@@ -76,7 +76,10 @@ class MainActivity : AppCompatActivity() {
                 falseList.forEach {
                     fNameList.add(it.name)
                 }
+                val args = Bundle()
+                args.putStringArrayList("fNameList", fNameList)
                 val dialogFragment = RemainItemDialogFragment()
+                dialogFragment.arguments = args
                 dialogFragment.show(supportFragmentManager, "RemainItemDialogFragment")
                 Toast.makeText(this, "$fNameList", Toast.LENGTH_LONG).show()
             }

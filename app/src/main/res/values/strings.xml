@@ -13,7 +13,5 @@
 
 <!--  AlertDialog -->
     <string name="dialog_title">Remain Items</string>
-    <string name="dialog_msg">The following items are not checked</string>
     <string name="dialog_btn_ok">Yes</string>
-    <string name="dialog_btn_no">No</string>
 </resources>
