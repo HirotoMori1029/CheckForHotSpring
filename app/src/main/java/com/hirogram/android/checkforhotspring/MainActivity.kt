@@ -69,8 +69,17 @@ class MainActivity : AppCompatActivity() {
                     falseList.add(it)
                 }
             }
+            //全てがチェックされていれば・・・
             if (falseList.isEmpty()) {
+                //todo コンプリートのアクションを予定
                 Toast.makeText(this, "All complete!!", Toast.LENGTH_LONG).show()
+                blgList.forEach {
+                    it.check = false
+                }
+                cAdapter.bList = blgList
+                cAdapter.notifyDataSetChanged()
+
+                //未チェックがあれば・・・
             } else {
                 fNameList.clear()
                 falseList.forEach {
