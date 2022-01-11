@@ -18,7 +18,8 @@
     <string name="dialog_pos_clicked">Prepare the item</string>
 
     <!-- RegisterPlaceActivity -->
-    <string name="current_place_desc">Check Location is %s</string>
+    <string name="current_place_desc">%s is picked as the location</string>
+    <string name="ok">OK</string>
 
     <!-- sp -->
     <string name="place_key">cPlace</string>
