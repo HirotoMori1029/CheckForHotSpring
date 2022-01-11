@@ -8,8 +8,8 @@
         android:title="@string/all_delete"/>
 
     <item
-        android:id="@+id/addAddress"
+        android:id="@+id/registerPlace"
         app:showAsAction="never"
-        android:title="@string/add_address"/>
+        android:title="@string/register_place"/>
 
 </menu>

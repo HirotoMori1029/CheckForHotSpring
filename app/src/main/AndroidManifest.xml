@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CheckForHotSpring">
         <activity
+            android:name=".RegisterPlaceActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddItemActivity"
             android:exported="false" />
         <activity

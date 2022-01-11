@@ -1,4 +1,5 @@
 <resources>
+    <!-- MainActivity -->
     <string name="app_name">CheckForHotSpring</string>
     <string name="start">CHECK START</string>
     <string name="item_number">ItemNo. %d</string>
@@ -7,12 +8,18 @@
     <string name="save">SAVE</string>
     <string name="add_item">Add Item</string>
 
-<!--  overflowMenu  -->
+    <!--  overflowMenu  -->
     <string name="all_delete">All delete</string>
-    <string name="add_address">Add address</string>
+    <string name="register_place">Register place</string>
 
-<!--  AlertDialog -->
+    <!--  AlertDialog -->
     <string name="dialog_title">Remain Items</string>
     <string name="dialog_btn_ok">Close dialog</string>
     <string name="dialog_pos_clicked">Prepare the item</string>
+
+    <!-- RegisterPlaceActivity -->
+    <string name="current_place_desc">Check Location is %s</string>
+
+    <!-- sp -->
+    <string name="place_key">cPlace</string>
 </resources>

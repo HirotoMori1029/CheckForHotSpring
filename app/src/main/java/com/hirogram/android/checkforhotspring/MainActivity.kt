@@ -131,10 +131,9 @@ class MainActivity : AppCompatActivity() {
                 cAdapter.notifyDataSetChanged()
             }
             //アドレスを登録する処理
-            R.id.addAddress -> {
-                //todo　プルダウンメニューで天気を確認する場所を登録するアクティビティを作る
-//                val addIntent = Intent(this@MainActivity, AddItemActivity::class.java)
-//                startActivity(addIntent)
+            R.id.registerPlace -> {
+                val rIntent = Intent(this@MainActivity, RegisterPlaceActivity::class.java)
+                startActivity(rIntent)
             }
             else ->
                 returnVal = super.onOptionsItemSelected(item)
