@@ -13,7 +13,7 @@ class RegisterPlaceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_place)
 
-        val sp = getPreferences(Context.MODE_PRIVATE)
+        val sp = getSharedPreferences(getString(R.string.preferences_file_key),Context.MODE_PRIVATE)
         val key = getString(R.string.place_key)
         val text = sp.getString(key, null) ?: "Nothing"
         val tvPlace = findViewById<TextView>(R.id.tvPlace)

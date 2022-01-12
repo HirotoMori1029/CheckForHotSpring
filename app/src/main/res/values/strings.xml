@@ -22,5 +22,6 @@
     <string name="ok">OK</string>
 
     <!-- sp -->
+    <string name="preferences_file_key">com.hirogram.android.checkforhotspring.PREFERENCES_FILE_KEY</string>
     <string name="place_key">cPlace</string>
 </resources>

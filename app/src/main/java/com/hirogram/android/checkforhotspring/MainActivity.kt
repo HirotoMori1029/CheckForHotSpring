@@ -36,7 +36,7 @@ import java.net.URL
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        private const val WEATHERINFO_URL = "http://api.openweathermap.org/data/2.5/weather?lang=ja"
+        private const val WEATHERINFO_URL = "https://api.openweathermap.org/data/2.5/weather?lang=ja"
         private const val APP_ID = "22656e56813a23e149407c8c15c8e731"
     }
 
@@ -98,10 +98,15 @@ class MainActivity : AppCompatActivity() {
                 }
                 cAdapter.bList = blgList
                 cAdapter.notifyDataSetChanged()
+                Paper.book().allKeys.forEach {
+                    Paper.book().write(it, Belonging(it, false))
+                }
                 //場所を登録していれば
-                val rPlace = getPreferences(Context.MODE_PRIVATE).getString(
+                val rPlace = getSharedPreferences(
+                    getString(R.string.preferences_file_key),Context.MODE_PRIVATE
+                ).getString(
                     getString(R.string.place_key), null
-                )
+                    )
                 rPlace?.let {
                     val urlFull = "$WEATHERINFO_URL&q=$it&APPID=$APP_ID"
                     receiveWeatherInfo(urlFull)
@@ -256,7 +261,7 @@ class MainActivity : AppCompatActivity() {
 
     @WorkerThread
     private suspend fun weatherInfoBackGroundRunner(url: String) :String {
-        val returnVal = withContext(Dispatchers.IO) {
+        return withContext(Dispatchers.IO) {
             var result = ""
             val url = URL(url)
             val con = url.openConnection() as? HttpURLConnection
@@ -271,13 +276,12 @@ class MainActivity : AppCompatActivity() {
                     stream.close()
                 }
                 catch (ex: SocketTimeoutException) {
-                    Log.w("CheckForHotSpring", "Connection timeout")
+                    Log.w("CheckForHotSpring", "SocketTimeout")
                 }
                 it.disconnect()
             }
             result
         }
-        return returnVal
     }
 
     private fun is2String(stream: InputStream) :String{
