@@ -91,7 +91,6 @@ class MainActivity : AppCompatActivity() {
             }
             //全てがチェックされていれば・・・
             if (falseList.isEmpty()) {
-                //todo コンプリートのアクションを予定
                 Toast.makeText(this, "All complete!!", Toast.LENGTH_LONG).show()
                 blgList.forEach {
                     it.check = false
@@ -110,6 +109,7 @@ class MainActivity : AppCompatActivity() {
                 rPlace?.let {
                     val urlFull = "$WEATHERINFO_URL&q=$it&APPID=$APP_ID"
                     receiveWeatherInfo(urlFull)
+                    //todo 天気による分岐を記述する
                 }
 
                 //未チェックがあれば・・・
@@ -123,7 +123,6 @@ class MainActivity : AppCompatActivity() {
                 val dialogFragment = RemainItemDialogFragment()
                 dialogFragment.arguments = args
                 dialogFragment.show(supportFragmentManager, "RemainItemDialogFragment")
-                Toast.makeText(this, "$fNameList", Toast.LENGTH_LONG).show()
             }
         }
 
