@@ -41,6 +41,10 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     //paper
     implementation 'io.github.pilgr:paperdb:2.7.1'
+    //コルーチン
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

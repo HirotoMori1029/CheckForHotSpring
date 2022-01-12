@@ -1,5 +1,6 @@
 package com.hirogram.android.checkforhotspring
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Color
@@ -12,13 +13,32 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.annotation.UiThread
+import androidx.annotation.WorkerThread
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.paperdb.Paper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.lang.StringBuilder
+import java.net.HttpURLConnection
+import java.net.SocketTimeoutException
+import java.net.URL
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        private const val WEATHERINFO_URL = "http://api.openweathermap.org/data/2.5/weather?lang=ja"
+        private const val APP_ID = "22656e56813a23e149407c8c15c8e731"
+    }
 
     private lateinit var cAdapter: CustomAdapter
     private var blgList = mutableListOf<Belonging>()
@@ -78,6 +98,14 @@ class MainActivity : AppCompatActivity() {
                 }
                 cAdapter.bList = blgList
                 cAdapter.notifyDataSetChanged()
+                //場所を登録していれば
+                val rPlace = getPreferences(Context.MODE_PRIVATE).getString(
+                    getString(R.string.place_key), null
+                )
+                rPlace?.let {
+                    val urlFull = "$WEATHERINFO_URL&q=$it&APPID=$APP_ID"
+                    receiveWeatherInfo(urlFull)
+                }
 
                 //未チェックがあれば・・・
             } else {
@@ -218,4 +246,62 @@ class MainActivity : AppCompatActivity() {
         }
         )
 
+    @UiThread
+    private fun receiveWeatherInfo(urlFull: String) {
+        lifecycleScope.launch { 
+            val result = weatherInfoBackGroundRunner(urlFull)
+            weatherInfoPostRunner(result)
+        }
+    }
+
+    @WorkerThread
+    private suspend fun weatherInfoBackGroundRunner(url: String) :String {
+        val returnVal = withContext(Dispatchers.IO) {
+            var result = ""
+            val url = URL(url)
+            val con = url.openConnection() as? HttpURLConnection
+            con?.let {
+                try {
+                    it.connectTimeout = 1000
+                    it.readTimeout = 1000
+                    it.requestMethod = "GET"
+                    it.connect()
+                    val stream = it.inputStream
+                    result = is2String(stream)
+                    stream.close()
+                }
+                catch (ex: SocketTimeoutException) {
+                    Log.w("CheckForHotSpring", "Connection timeout")
+                }
+                it.disconnect()
+            }
+            result
+        }
+        return returnVal
+    }
+
+    private fun is2String(stream: InputStream) :String{
+        val sb = StringBuilder()
+        val reader = BufferedReader(InputStreamReader(stream, "UTF8"))
+        //todo ここの処理の意味を調べる
+        var line = reader.readLine()
+        while (line != null) {
+            sb.append(line)
+            line = readLine()
+        }
+        reader.close()
+        return sb.toString()
+    }
+    
+    @UiThread
+    private fun weatherInfoPostRunner(result: String) {
+        val infoList = arrayListOf<String>()
+        val rootJSON = JSONObject(result)
+        var str = rootJSON.getString("name")
+        infoList.add(str)
+        str = rootJSON.getJSONArray("weather")
+            .getJSONObject(0).getString("description")
+        infoList.add(str)
+        Toast.makeText(this, "$infoList", Toast.LENGTH_LONG).show()
+    }
 }
