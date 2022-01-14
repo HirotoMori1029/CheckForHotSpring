@@ -36,8 +36,8 @@ import java.net.URL
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        private const val WEATHERINFO_URL = "https://api.openweathermap.org/data/2.5/weather?lang=ja"
-        private const val APP_ID = "22656e56813a23e149407c8c15c8e731"
+        private const val WEATHERINFO_URL = "https://api.openweathermap.org/data/2.5/weather?"
+        private const val APP_ID = "---"
     }
 
     private lateinit var cAdapter: CustomAdapter
@@ -109,7 +109,6 @@ class MainActivity : AppCompatActivity() {
                 rPlace?.let {
                     val urlFull = "$WEATHERINFO_URL&q=$it&APPID=$APP_ID"
                     receiveWeatherInfo(urlFull)
-                    //todo 天気による分岐を記述する
                 }
 
                 //未チェックがあれば・・・
@@ -119,6 +118,7 @@ class MainActivity : AppCompatActivity() {
                     fNameList.add(it.name)
                 }
                 val args = Bundle()
+                args.putString("ARGS_NAME", "remainItemDisplay")
                 args.putStringArrayList("fNameList", fNameList)
                 val dialogFragment = RemainItemDialogFragment()
                 dialogFragment.arguments = args
@@ -132,7 +132,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, AddItemActivity::class.java)
             startActivity(intent)
         }
-
     }
 
     override fun onResume() {
@@ -286,7 +285,6 @@ class MainActivity : AppCompatActivity() {
     private fun is2String(stream: InputStream) :String{
         val sb = StringBuilder()
         val reader = BufferedReader(InputStreamReader(stream, "UTF8"))
-        //todo ここの処理の意味を調べる
         var line = reader.readLine()
         while (line != null) {
             sb.append(line)
@@ -298,13 +296,22 @@ class MainActivity : AppCompatActivity() {
     
     @UiThread
     private fun weatherInfoPostRunner(result: String) {
-        val infoList = arrayListOf<String>()
+        val args = Bundle()
+        args.putString("ARGS_NAME", "weatherMessageDisplay")
+        val weatherInfo:MutableList<Map<String, String>> = mutableListOf()
         val rootJSON = JSONObject(result)
-        var str = rootJSON.getString("name")
-        infoList.add(str)
-        str = rootJSON.getJSONArray("weather")
-            .getJSONObject(0).getString("description")
-        infoList.add(str)
-        Toast.makeText(this, "$infoList", Toast.LENGTH_LONG).show()
+        var key = "name"
+        var str = rootJSON.getString(key)
+        args.putString(key, str)
+        val weatherJSON = rootJSON.getJSONArray("weather").getJSONObject(0)
+        key = "main"
+        str = weatherJSON.getString(key)
+        args.putString(key, str)
+        key = "description"
+        str = weatherJSON.getString(key)
+        args.putString(key, str)
+        val dialogFragment = RemainItemDialogFragment()
+        dialogFragment.arguments = args
+        dialogFragment.show(supportFragmentManager, "RemainItemDialogFragment")
     }
 }

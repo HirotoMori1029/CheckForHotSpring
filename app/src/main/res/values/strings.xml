@@ -13,9 +13,12 @@
     <string name="register_place">Register place</string>
 
     <!--  AlertDialog -->
-    <string name="dialog_title">Remain Items</string>
-    <string name="dialog_btn_ok">Close dialog</string>
-    <string name="dialog_pos_clicked">Prepare the item</string>
+    <string name="rem_dialog_title">Remain Items</string>
+    <string name="rem_dialog_btn_ok">Close dialog</string>
+    <string name="msg_dialog_title">Message</string>
+    <string name="msg_dialog_btn_ok">Got it</string>
+    <string name="msg_rain">\nTake an umbrella!</string>
+    <string name="msg_snow">\nWatch your step!</string>
 
     <!-- RegisterPlaceActivity -->
     <string name="current_place_desc">%s is picked as the location</string>
