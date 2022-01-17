@@ -20,7 +20,7 @@ class RegisterPlaceActivity : AppCompatActivity() {
         tvPlace.text = getString(R.string.current_place_desc, text)
 
         //リスト・アダプターの作成
-        val plist: MutableList<String> = mutableListOf("Sasebo", "Fukuoka", "Kitakyushu")
+        val plist: MutableList<String> = mutableListOf("Sasebo", "Fukuoka", "Kitakyushu", "Imari")
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, plist)
         val lvPlace = findViewById<ListView>(R.id.lvPlace)
 

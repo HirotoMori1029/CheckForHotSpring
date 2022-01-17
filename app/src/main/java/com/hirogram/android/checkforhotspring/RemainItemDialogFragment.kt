@@ -27,14 +27,18 @@ class RemainItemDialogFragment: DialogFragment() {
             }
             //天気情報を表示する処理
             "weatherMessageDisplay" -> {
-                val cityName = arguments?.getString("name", null)
-                val main = arguments?.getString("main", null)
-                val desc = arguments?.getString("description", null)
-                var msg = "In $cityName, It is $desc today"
-                if (main == "Rain") {
-                    msg += getString(R.string.msg_rain)
-                } else if (main == "Snow") {
-                    msg += getString(R.string.msg_snow)
+                var msg = ""
+                arguments?.let {
+                    val cityName = it.getString("name", null)
+                    val main = it.getString("main", null)
+                    val desc = it.getString("description", null)
+                    msg += "In $cityName, It is $desc today"
+                    if (main == "Rain") {
+                        msg += getString(R.string.msg_rain)
+                    } else if (main == "Snow") {
+                        msg += getString(R.string.msg_snow)
+                }
+
                 }
                 dialog = activity?.let {
                     builder.setTitle(R.string.msg_dialog_title)
